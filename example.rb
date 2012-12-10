@@ -57,6 +57,10 @@ user.say_hi
 class MegaHi
 	attr_accessor :names
 
+	@foo = lambda { |n| 
+		n + 10 if n.instance_of?(Fixnum) 
+	}
+    
 	#create the object
 	def initialize(names = 'World')
 		@names = names
@@ -86,6 +90,11 @@ class MegaHi
 		end			
 	end
 
+	def self.say_hi
+		puts 'Static method'
+		puts @foo.call(10).to_s
+	end
+
 end
 
 mh = MegaHi.new
@@ -107,3 +116,6 @@ mh.names = nil
 mh.say_hi
 mh.say_bye
 
+MegaHi.say_hi
+
+Kernel.const_get("MegaHi").send(:say_hi)
